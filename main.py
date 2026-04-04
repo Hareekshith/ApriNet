@@ -20,12 +20,14 @@ columns = [
 df = pd.read_csv("KDDTrain+.txt", names=columns)
 
 # Reduce size (IMPORTANT)
-df = df.sample(3000)
+df = df.sample(7000, random_state=6)
 
 # Select features
 df = df[['protocol_type','service','flag']]
 
-# Convert to transactions
+df['service'] = df['service'].replace(['0', 0], 'unknown')
+
+# Transactions
 transactions = df.astype(str).values.tolist()
 
 # Encode
@@ -34,10 +36,26 @@ te_data = te.fit(transactions).transform(transactions)
 df_encoded = pd.DataFrame(te_data, columns=te.columns_)
 
 # Apriori
-frequent_itemsets = apriori(df_encoded, min_support=0.2, use_colnames=True)
+frequent_itemsets = apriori(df_encoded, min_support=0.15, use_colnames=True)
 
 # Rules
 rules = association_rules(frequent_itemsets, metric="confidence", min_threshold=0.6)
-# Output
+
+# Filter
+rules = rules[(rules['confidence'] > 0.7) & (rules['lift'] > 1)]
+
+# Clean output
+rules['antecedents'] = rules['antecedents'].apply(lambda x: ', '.join(list(x)))
+rules['consequents'] = rules['consequents'].apply(lambda x: ', '.join(list(x)))
+frequent_itemsets['itemsets'] = frequent_itemsets['itemsets'].apply(lambda x: ', '.join(list(x)))
+
+# Sort
+rules = rules.sort_values(by='confidence', ascending=False)
+
+# Save
+rules.to_csv("rules_output.csv", index=False)
+frequent_itemsets.to_csv("frequent_itemsets.csv", index=False)
+
+# Print
 print("\nFrequent Itemsets:\n", frequent_itemsets.head())
 print("\nRules:\n", rules[['antecedents','consequents','support','confidence','lift']])
