@@ -52,7 +52,10 @@ def run_apriori():
                 df = df.sample(7000, random_state=6)
             df = df[['protocol_type','service','flag']]
             df.loc[:, 'service'] = df['service'].replace(['0', 0], 'unknown')
-            transactions = df.astype(str).values.tolist()
+            
+            transactions = []
+            for _, row in df.iterrows():
+                transactions.append([str(item).strip() for item in row.dropna() if pd.notna(item) and str(item).strip()])
         else:
             df = pd.read_csv(io.BytesIO(content), header=0, dtype=str)
             if len(df) > 10000:

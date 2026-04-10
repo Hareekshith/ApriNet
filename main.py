@@ -51,11 +51,3 @@ frequent_itemsets['itemsets'] = frequent_itemsets['itemsets'].apply(lambda x: ',
 
 # Sort
 rules = rules.sort_values(by='confidence', ascending=False)
-
-# Save
-rules.to_csv("rules_output.csv", index=False)
-frequent_itemsets.to_csv("frequent_itemsets.csv", index=False)
-
-# Print
-print("\nFrequent Itemsets:\n", frequent_itemsets.head())
-print("\nRules:\n", rules[['antecedents','consequents','support','confidence','lift']])

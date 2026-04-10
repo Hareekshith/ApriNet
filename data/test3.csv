@@ -1,0 +1,9 @@
+protocol,service,flag
+tcp,http,SF
+tcp,http,SF
+tcp,ftp,SF
+udp,dns,SF
+tcp,ssh,S0
+tcp,ssh,S0
+tcp,unknown,S0
+udp,unknown,S0

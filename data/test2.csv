@@ -1,0 +1,11 @@
+protocol,service,flag,activity
+tcp,http,SF,normal
+tcp,http,SF,normal
+tcp,ssh,S0,failed_login
+tcp,ssh,S0,failed_login
+tcp,unknown,S0,scan
+udp,unknown,S0,scan
+tcp,ftp,SF,normal
+udp,dns,SF,normal
+tcp,ssh,S0,bruteforce
+tcp,unknown,S0,scan
