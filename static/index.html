@@ -88,31 +88,98 @@
     <div class="modal hidden" id="modal-learn">
         <button class="close-modal">&times;</button>
         <h2>Learn Apriori</h2>
-        <div class="modal-content">
-            <p class="mb-4">The Apriori algorithm is used for mining frequent itemsets and relevant association rules.
-                It operates on databases containing transactions.</p>
+        <div class="modal-content text-left" style="max-height: 70vh; overflow-y: auto; padding-right: 10px;">
+
+            <h3 class="mt-4" style="color: var(--primary-color);">What is the Apriori Algorithm?</h3>
+            <p class="mb-4">The <strong>Apriori algorithm</strong> is a classic data mining technique used for
+                <em>Association Rule Mining</em>. It operates on databases of transactions (like a grocery store's
+                checkout logs) to discover patterns and relationships between different items. Its core objective is to
+                identify <strong>"Frequent Itemsets"</strong>—groups of items that often occur together—and generate
+                rules to predict the occurrence of one item based on another.
+            </p>
+
+            <h3 class="mt-4" style="color: var(--primary-color);">The Apriori Principle</h3>
+            <p class="mb-4">The algorithm is built on a fundamental anti-monotone property: <em>"If an itemset is
+                    frequent, then all of its subsets must also be frequent."</em> Conversely, if any subset is
+                infrequent, the larger set cannot be frequent. This allows the algorithm to massively reduce the number
+                of item combinations it needs to scan, vastly improving computational efficiency.</p>
+
+            <h3 class="mt-4" style="color: var(--primary-color);">Key Metrics</h3>
+            <ul class="help-list mb-4">
+                <li><strong>Support:</strong> Calculates how frequently an itemset appears in the dataset. <br><em
+                        class="text-secondary">(e.g., How often are Bread and Butter bought together compared to all
+                        transactions?)</em></li>
+                <li><strong>Confidence:</strong> Measures the likelihood that item Y is purchased when item X is
+                    purchased. <br><em class="text-secondary">(e.g., If a customer buys Bread, there is an 80% chance
+                        they will also buy Butter.)</em></li>
+                <li><strong>Lift:</strong> Evaluates the true strength of a rule compared to random chance. A Lift > 1
+                    indicates a positive, strong association, meaning the items are genuinely dependent on one another.
+                </li>
+            </ul>
+
+            <h3 class="mt-4 mb-4" style="color: var(--primary-color);">Video Tutorial</h3>
             <div class="video-container">
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/o_hnNBM0jtk?si=R_gJU6jQ-5VITzCF"
                     title="YouTube video player" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
+
+            <h3 class="mt-4" style="color: var(--primary-color);">Helpful References</h3>
+            <ul class="help-list mb-4">
+                <li><a href="https://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/" target="_blank"
+                        style="color: var(--primary-color); text-decoration: none;">mlxtend Apriori Documentation</a> -
+                    The official library used in this project's backend for generating frequent itemsets.</li>
+                <li><a href="https://pandas.pydata.org/docs/" target="_blank"
+                        style="color: var(--primary-color); text-decoration: none;">Pandas Documentation</a> - Used for
+                    powerful CSV dataset parsing and data manipulation.</li>
+                <li><a href="https://en.wikipedia.org/wiki/Apriori_algorithm" target="_blank"
+                        style="color: var(--primary-color); text-decoration: none;">Apriori algorithm (Wikipedia)</a> -
+                    Comprehensive theoretical background and mathematical foundation of the concept.</li>
+            </ul>
         </div>
     </div>
 
     <div class="modal hidden" id="modal-help">
         <button class="close-modal">&times;</button>
-        <h2>How to use this tool</h2>
-        <div class="modal-content text-left">
-            <ol class="help-list">
-                <li><strong>Upload Dataset:</strong> Drag and drop your CSV dataset containing transactions. Ensure the
-                    first row has column headers.</li>
-                <li><strong>Select Fields:</strong> Choose the specific fields/columns from the dataset that you want to
-                    analyze.</li>
-                <li><strong>Adjust Parameters:</strong> Set the minimum support (how frequently an itemset must appear)
-                    and confidence (how reliable the rule must be).</li>
-                <li><strong>Discover:</strong> Click the button to run the algorithm and view your frequent itemsets and
-                    association rules.</li>
+        <h2>How to Use ApriNet</h2>
+        <div class="modal-content text-left" style="max-height: 70vh; overflow-y: auto; padding-right: 10px;">
+            <p class="mb-4">Follow these straightforward steps to generate robust association rules from your
+                transactional data:</p>
+
+            <ol class="help-list" style="line-height: 1.8;">
+                <li>
+                    <strong>Upload Your Dataset:</strong>
+                    Drag and drop your `.csv` or `.txt` file into the primary dashed upload zone, or click to browse.
+                    <em class="text-secondary"
+                        style="display: block; margin-top: 5px; font-size: 0.9em; line-height: 1.5;">(Note: General
+                        datasets must contain a header row denoting column names to be parsed properly).</em>
+                </li>
+                <br>
+                <li>
+                    <strong>Choose Processing Mode & Fields:</strong>
+                    If you are running the specialized <em>KDD Dataset</em>, check the corresponding toggle—this locks
+                    in predefined columns. If analyzing your own file, leave it unchecked and our smart parser will
+                    instantly spawn a checkbox grid allowing you to select and filter exactly which features to mine.
+                </li>
+                <br>
+                <li>
+                    <strong>Tune the Algorithm Parameters:</strong>
+                    <ul style="list-style-type: circle; padding-left: 1.5rem; margin-top: 5px; line-height: 1.6;">
+                        <li><strong>Min Support:</strong> Controls the frequency threshold. A value of 0.15 means an
+                            itemset must appear in at least 15% of all rows to be evaluated.</li>
+                        <li><strong>Min Confidence:</strong> Controls the reliability of a rule. A confidence of 0.6
+                            dictates that the predicted outcome must hold true 60% of the time based on the antecedent.
+                        </li>
+                    </ul>
+                </li>
+                <br>
+                <li>
+                    <strong>Discover Patterns & Interpret:</strong>
+                    Hit the "Discover Patterns" button. Once the backend processing finishes, smoothly scroll down to
+                    the dual-tab interface to view the raw <em>Frequent Itemsets</em> and the calculated <em>Association
+                        Rules</em> (filtered strictly to display patterns possessing a positive Lift > 1).
+                </li>
             </ol>
         </div>
     </div>
